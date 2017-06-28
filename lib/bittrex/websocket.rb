@@ -68,7 +68,7 @@ module Bittrex
       @frames << frame
       to_log("WebSocket frame: #{frame.marker}")
       if @callbacks_instance.respond_to? :on_message
-        @callbacks_instance.on_message(event)
+        @callbacks_instance.on_message(frame)
       end
     end
 
