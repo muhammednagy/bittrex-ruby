@@ -13,6 +13,7 @@ module Bittrex
   autoload :Wallet,        'bittrex/wallet'
   autoload :Withdrawl,     'bittrex/withdrawl'
   autoload :Api,           'bittrex/api'
+  autoload :WebSocket,     'bittrex/websocket'
 
   def self.client
     @client ||= Client.new(configuration.auth)
