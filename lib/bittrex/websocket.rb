@@ -21,9 +21,9 @@ module Bittrex
                 :signalr_options, :frames
 
     def initialize(callback_instance, logger = nil)
-      @callback_instance = callback_instance
-      @logger            = logger
-      @frames            = []
+      @callbacks_instance = callback_instance
+      @logger             = logger
+      @frames             = []
       get_signalr_options
     end
 
