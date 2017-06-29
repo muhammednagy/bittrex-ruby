@@ -66,7 +66,7 @@ module Bittrex
       return nil if data == {}
       frame = Frame.new(data)
       @frames << frame
-      to_log("WebSocket frame: #{frame.marker}")
+      to_log("WebSocket frame: #{event.data.to_s[0...100]}")
       if @callbacks_instance.respond_to? :on_message
         @callbacks_instance.on_message(frame)
       end
