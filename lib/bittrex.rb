@@ -1,4 +1,5 @@
 require 'bittrex/version'
+require 'logger'
 
 module Bittrex
   autoload :Market,        'bittrex/market'
@@ -30,5 +31,9 @@ module Bittrex
 
   def self.root
     File.expand_path('../..', __FILE__)
+  end
+
+  def self.stdout_logger
+    (@@stdout_logger ||= Logger.new($stdout))
   end
 end

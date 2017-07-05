@@ -17,6 +17,8 @@ module Bittrex
       'tid' => 10
     }.freeze
 
+    RECONNECT_INTERVAL = 1
+
     attr_reader :key, :secret,
                 :signalr_options, :frames
 
@@ -85,13 +87,26 @@ module Bittrex
 
         @ws_client.on(:open)    { |event| on_open(event) }
         @ws_client.on(:message) { |event| on_message(event) }
-        @ws_client.on(:close)   { |event| on_close(event) }
+        @ws_client.on(:close) do |event|
+          on_close(event)
+          EM.add_timer(RECONNECT_INTERVAL) {
+            to_log_error "DISCONNECTED!!! #{event.code}, #{event.reason}"\
+                         '... try reconnect.'
+            run_websocket_monitoring
+          }
+        end
       }
     end
 
     def to_log(text)
       return unless @logger
       @logger.info(text)
+    end
+
+    def to_log_error(text)
+      Bittrex.stdout_logger.error("Bittrex::WebSocket error.. #{text}")
+      return unless @logger
+      @logger.error(text)
     end
   end
 end
