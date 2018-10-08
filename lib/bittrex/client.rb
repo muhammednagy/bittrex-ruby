@@ -34,7 +34,7 @@ module Bittrex
     private
 
     def signature(req)
-      OpenSSL::HMAC.hexdigest('sha512', secret, "#{req.path}?#{req.params&.to_query}")
+      OpenSSL::HMAC.hexdigest('sha512', secret, "#{req.path}?#{req.params.to_query}")
     end
 
     def connection
